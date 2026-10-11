@@ -1,5 +1,5 @@
 # Thư viện cài bằng npm install: không đưa lên GitHub
-node_modules/
+.gitignore
 # Tệp cấu hình bí mật (nếu sau này bạn dùng)
 .env
 # Tệp rác của hệ điều hành và công cụ
