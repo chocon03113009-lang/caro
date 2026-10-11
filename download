@@ -1,0 +1,8 @@
+# Thư viện cài bằng npm install: không đưa lên GitHub
+node_modules/
+# Tệp cấu hình bí mật (nếu sau này bạn dùng)
+.env
+# Tệp rác của hệ điều hành và công cụ
+*.log
+.DS_Store
+Thumbs.db

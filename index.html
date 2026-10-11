@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cờ Caro Online</title>
+  <!-- Phông chữ từ Google Fonts. Nếu không có mạng, trình duyệt tự dùng phông dự phòng. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Itim&display=swap" rel="stylesheet">
+  <!-- Kết nối tệp CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+
+    <!-- ========== MÀN HÌNH 1: TRANG CHỦ ========== -->
+    <section id="home" class="screen">
+      <h1 class="title">Cờ Caro <span class="title-mark"><i class="mx"></i><i class="mo"></i></span></h1>
+      <p class="lead">Xếp đủ 5 quân liên tiếp để thắng. Chơi với bạn cùng bàn hoặc mời cả lớp vào phòng.</p>
+
+      <div class="paper home-card">
+        <label class="field">
+          <span>Tên của bạn</span>
+          <input id="nameInput" type="text" maxlength="16" placeholder="Ví dụ: Minh Anh" autocomplete="nickname">
+        </label>
+
+        <div class="home-actions">
+          <button id="btnLocal" class="btn btn-primary" type="button">Chơi trên một máy</button>
+          <p class="hint">Hai người luân phiên đánh trên cùng một thiết bị. Không cần máy chủ.</p>
+        </div>
+
+        <hr class="divider">
+
+        <div class="home-actions">
+          <button id="btnCreate" class="btn btn-blue" type="button">Tạo phòng online</button>
+          <div class="join-row">
+            <input id="codeInput" type="text" maxlength="8" placeholder="Mã phòng" aria-label="Mã phòng" autocapitalize="characters" autocomplete="off">
+            <button id="btnJoin" class="btn btn-red" type="button">Vào phòng</button>
+          </div>
+          <p class="hint">Cần có Internet. Tạo phòng rồi gửi mã phòng (hoặc đường dẫn) cho bạn bè ở bất kỳ đâu.</p>
+          <p id="onlineNote" class="hint note-warn hidden">Bạn đang mở trang trực tiếp từ tệp nên chỉ chơi được trên một máy. Hãy mở bằng đường dẫn web để chơi online.</p>
+        </div>
+
+        <p id="homeMsg" class="home-msg" role="alert"></p>
+      </div>
+    </section>
+
+    <!-- ========== MÀN HÌNH 2: BÀN CỜ ========== -->
+    <section id="game" class="screen hidden">
+      <div id="netBanner" class="net-banner hidden" role="status"></div>
+      <header class="topbar">
+        <button id="btnLeave" class="btn btn-ghost" type="button">Thoát</button>
+        <span id="connBadge" class="badge"></span>
+        <div id="roomBox" class="room-box hidden">
+          <span>Mã phòng</span>
+          <strong id="roomCode"></strong>
+          <button id="btnCopy" class="btn btn-small" type="button">Sao chép</button>
+        </div>
+      </header>
+
+      <div class="game-layout">
+        <div class="board-wrap">
+          <div id="board" class="board" role="grid" aria-label="Bàn cờ 15 nhân 15"></div>
+        </div>
+
+        <aside class="side">
+          <p id="statusText" class="status" role="status" aria-live="polite"></p>
+
+          <div class="players">
+            <div id="cardX" class="pcard x">
+              <span class="sym"><i class="mx"></i></span>
+              <div><strong id="nameX">X</strong><small>Thắng: <b id="scoreX">0</b></small></div>
+            </div>
+            <div id="cardO" class="pcard o">
+              <span class="sym"><i class="mo"></i></span>
+              <div><strong id="nameO">O</strong><small>Thắng: <b id="scoreO">0</b></small></div>
+            </div>
+          </div>
+
+          <p id="spectatorNote" class="note hidden">Bạn đang theo dõi trận đấu. Khi có người chơi rời phòng, bạn sẽ được xếp vào chỗ trống.</p>
+
+          <div id="memberBox" class="paper members hidden">
+            <h2>Trong phòng (<span id="memberCount">0</span>/10)</h2>
+            <ul id="memberList"></ul>
+          </div>
+
+          <button id="btnRestart" class="btn btn-primary" type="button">Ván mới</button>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <!-- Hộp thông báo kết quả -->
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="paper modal-card">
+      <h2 id="modalTitle"></h2>
+      <p id="modalText"></p>
+      <div class="modal-actions">
+        <button id="modalRestart" class="btn btn-primary" type="button">Chơi lại</button>
+        <button id="modalClose" class="btn btn-ghost" type="button">Xem bàn cờ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Thông báo nhỏ hiện ở cuối màn hình -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- Kết nối tệp JavaScript (đặt cuối trang để HTML tải xong trước) -->
+  <!-- Thư viện Socket.IO phía trình duyệt: do chính máy chủ phục vụ tại đường dẫn này -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
